@@ -92,8 +92,13 @@ function App() {
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#home" onClick={closeMenu} aria-label="Wub Decor home">
-          Wub Decor
+        <a
+          className="brand"
+          href="#home"
+          onClick={closeMenu}
+          aria-label="Wub Christian Wedding Planner home"
+        >
+          Wub Christian Wedding Planner
         </a>
 
         <button
@@ -127,8 +132,8 @@ function App() {
             <p className="eyebrow">Christian wedding and event planning in Manchester</p>
             <h1 id="hero-title">Beautiful Events, Planned with Purpose</h1>
             <p>
-              Wub Decor creates elegant, meaningful and stress-free weddings and special celebrations
-              in Manchester and surrounding areas.
+              Wub Christian Wedding Planner creates elegant, meaningful and stress-free weddings and
+              special celebrations in Manchester and surrounding areas.
             </p>
             <div className="hero-actions" aria-label="Hero actions">
               <a className="button button-primary" href="#services">
@@ -136,7 +141,7 @@ function App() {
                 <ChevronRight aria-hidden="true" />
               </a>
               <a className="button button-secondary" href="#app">
-                Open Wub Decor App
+                Open Wub Christian Wedding Planner App
               </a>
             </div>
           </div>
@@ -147,8 +152,8 @@ function App() {
             <p className="eyebrow">What we create</p>
             <h2 id="services-title">Our Services</h2>
             <p>
-              From intimate family moments to full wedding days, Wub Decor brings calm planning,
-              elegant styling, and attentive coordination to each celebration.
+              From intimate family moments to full wedding days, Wub Christian Wedding Planner brings
+              calm planning, elegant styling, and attentive coordination to each celebration.
             </p>
           </div>
 
@@ -171,9 +176,9 @@ function App() {
             <p className="eyebrow">Personalised packages</p>
             <h3>Looking for the best package for your celebration?</h3>
             <p>
-              Contact Wub Decor and tell us about your event. We will discuss your requirements and
-              provide a personalised offer based on your event type, location, number of guests and
-              services needed.
+              Contact Wub Christian Wedding Planner and tell us about your event. We will discuss
+              your requirements and provide a personalised offer based on your event type, location,
+              number of guests and services needed.
             </p>
             <a className="button button-primary" href="#contact">
               Contact Us for an Offer
@@ -183,15 +188,16 @@ function App() {
 
         <section className="section about-section" id="about" aria-labelledby="about-title">
           <div className="about-copy">
-            <p className="eyebrow">About Wub Decor</p>
+            <p className="eyebrow">About Wub Christian Wedding Planner</p>
             <h2 id="about-title">Spiritual planning for meaningful celebrations.</h2>
             <p>
-              Wub Decor is a Manchester-based spiritual wedding and event planning service focused on
-              creating meaningful, elegant and memorable celebrations.
+              Wub Christian Wedding Planner is a Manchester-based spiritual wedding and event
+              planning service focused on creating meaningful, elegant and memorable celebrations.
             </p>
             <p>
-              From the first planning conversation to the final moments of the event, Wub Decor
-              coordinates the important details so clients can relax and enjoy their special occasion.
+              From the first planning conversation to the final moments of the event, Wub Christian
+              Wedding Planner coordinates the important details so clients can relax and enjoy their
+              special occasion.
             </p>
           </div>
 
@@ -214,16 +220,16 @@ function App() {
         <section className="app-section" id="app" aria-labelledby="app-title">
           <div className="section-heading centered">
             <p className="eyebrow">Forms and services</p>
-            <h2 id="app-title">Open the Wub Decor App</h2>
+            <h2 id="app-title">Open the Wub Christian Wedding Planner App</h2>
             <p>
-              Scan the QR code with your phone camera to open the Wub Decor app and access our forms
-              and services.
+              Scan the QR code with your phone camera to open the Wub Christian Wedding Planner app
+              and access our forms and services.
             </p>
           </div>
 
           {hasJotformAppUrl ? (
             <div className="qr-layout">
-              <div className="qr-card" aria-label="Wub Decor app QR code">
+              <div className="qr-card" aria-label="Wub Christian Wedding Planner app QR code">
                 <QRCodeSVG
                   value={JOTFORM_APP_URL}
                   size={300}
@@ -231,7 +237,7 @@ function App() {
                   fgColor="#4b0926"
                   level="H"
                   includeMargin
-                  title="QR code to open the Wub Decor app"
+                  title="QR code to open the Wub Christian Wedding Planner app"
                 />
               </div>
               <div className="qr-copy">
@@ -258,7 +264,7 @@ function App() {
         <section className="section contact-section" id="contact" aria-labelledby="contact-title">
           <div>
             <p className="eyebrow">Contact</p>
-            <h2 id="contact-title">Contact Wub Decor</h2>
+            <h2 id="contact-title">Contact Wub Christian Wedding Planner</h2>
             <p>Based in Manchester, United Kingdom</p>
             <p>
               Tell us which service you are interested in and we will contact you to discuss a suitable
@@ -276,7 +282,7 @@ function App() {
               <span>Phone: +44 7472 221865</span>
             </a>
             <a className="button button-primary" href="#app">
-              Open Wub Decor App
+              Open Wub Christian Wedding Planner App
             </a>
           </div>
         </section>
@@ -284,8 +290,8 @@ function App() {
 
       <footer className="site-footer">
         <div>
-          <h2>Wub Decor</h2>
-          <p>Spiritual Wedding and Event Planning</p>
+          <h2>Wub Christian Wedding Planner</h2>
+          <p>Christian Wedding and Event Planning</p>
           <p>Manchester, United Kingdom</p>
         </div>
 
@@ -297,7 +303,7 @@ function App() {
           ))}
         </nav>
 
-        <p className="copyright">© {currentYear} Wub Decor. All rights reserved.</p>
+        <p className="copyright">© {currentYear} Wub Christian Wedding Planner. All rights reserved.</p>
       </footer>
     </div>
   );
