@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Baby,
   CalendarHeart,
@@ -95,6 +95,9 @@ const coordinationItems = [
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("Wedding Planning");
+  const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
+  const modalRef = useRef(null);
+  const consultationTriggerRef = useRef(null);
   const hasJotformAppUrl = !JOTFORM_APP_URL.includes("PASTE_YOUR_JOTFORM_APP_LINK_HERE");
   const currentYear = new Date().getFullYear();
   const consultationFormUrl = `${JOTFORM_CONSULTATION_URL}${
@@ -102,13 +105,72 @@ function App() {
   }selectedService=${encodeURIComponent(selectedService)}`;
 
   const closeMenu = () => setIsMenuOpen(false);
-  const requestConsultation = (serviceName = selectedService) => {
-    setSelectedService(serviceName);
-    closeMenu();
+  const closeConsultationModal = () => {
+    setIsConsultationModalOpen(false);
     window.requestAnimationFrame(() => {
-      document.getElementById("consultation")?.scrollIntoView({ behavior: "smooth" });
+      consultationTriggerRef.current?.focus?.();
     });
   };
+
+  const requestConsultation = (serviceName = selectedService, triggerElement = null) => {
+    setSelectedService(serviceName);
+    consultationTriggerRef.current = triggerElement || document.activeElement;
+    closeMenu();
+    setIsConsultationModalOpen(true);
+  };
+
+  useEffect(() => {
+    if (!isConsultationModalOpen) {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const focusableSelector =
+      'a[href], button:not([disabled]), iframe, input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    window.requestAnimationFrame(() => {
+      const focusableElements = modalRef.current?.querySelectorAll(focusableSelector);
+      focusableElements?.[0]?.focus();
+    });
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeConsultationModal();
+        return;
+      }
+
+      if (event.key !== "Tab" || !modalRef.current) {
+        return;
+      }
+
+      const focusableElements = Array.from(modalRef.current.querySelectorAll(focusableSelector));
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        modalRef.current.focus();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isConsultationModalOpen]);
 
   return (
     <div className="site-shell">
@@ -164,7 +226,7 @@ function App() {
               <button
                 className="button button-secondary"
                 type="button"
-                onClick={() => requestConsultation()}
+                onClick={(event) => requestConsultation(undefined, event.currentTarget)}
               >
                 Request a Consultation
               </button>
@@ -191,11 +253,11 @@ function App() {
                 role="button"
                 tabIndex={0}
                 aria-label={`Request a Consultation for ${title}`}
-                onClick={() => requestConsultation(serviceName)}
+                onClick={(event) => requestConsultation(serviceName, event.currentTarget)}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
-                    requestConsultation(serviceName);
+                    requestConsultation(serviceName, event.currentTarget);
                   }
                 }}
               >
@@ -209,7 +271,7 @@ function App() {
                   type="button"
                   onClick={(event) => {
                     event.stopPropagation();
-                    requestConsultation(serviceName);
+                    requestConsultation(serviceName, event.currentTarget);
                   }}
                 >
                   Request a Consultation
@@ -229,7 +291,7 @@ function App() {
             <button
               className="button button-primary"
               type="button"
-              onClick={() => requestConsultation()}
+              onClick={(event) => requestConsultation(undefined, event.currentTarget)}
             >
               Request a Consultation
             </button>
@@ -293,12 +355,18 @@ function App() {
             </aside>
 
             <div className="consultation-form-card">
-              <iframe
-                className="consultation-frame"
-                src={consultationFormUrl}
-                title="Wub Christian Wedding & Event Planner Consultation Request Form"
-                loading="lazy"
-              />
+              <h3>Ready to share your plans?</h3>
+              <p>
+                Open the consultation request form when you are ready. Your selected service will be
+                included so Wub Christian Wedding & Event Planner can respond with the right support.
+              </p>
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={(event) => requestConsultation(selectedService, event.currentTarget)}
+              >
+                Request a Consultation
+              </button>
             </div>
           </div>
         </section>
@@ -393,6 +461,60 @@ function App() {
           © {currentYear} Wub Christian Wedding & Event Planner. All rights reserved.
         </p>
       </footer>
+
+      {isConsultationModalOpen ? (
+        <div
+          className="modal-overlay"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeConsultationModal();
+            }
+          }}
+        >
+          <section
+            className="consultation-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="consultation-modal-title"
+            aria-describedby="consultation-modal-description"
+            ref={modalRef}
+            tabIndex={-1}
+          >
+            <div className="modal-header">
+              <div>
+                <p className="eyebrow">Subject to confirmation</p>
+                <h2 id="consultation-modal-title">Request a Consultation</h2>
+              </div>
+              <button
+                className="modal-close"
+                type="button"
+                aria-label="Close consultation form"
+                onClick={closeConsultationModal}
+              >
+                <X aria-hidden="true" />
+              </button>
+            </div>
+
+            <p id="consultation-modal-description" className="modal-intro">
+              Tell us about your special occasion and provide a few suitable consultation times.
+            </p>
+
+            <iframe
+              className="consultation-modal-frame"
+              src={consultationFormUrl}
+              title="Wub Christian Wedding & Event Planner Consultation Request Form"
+              loading="lazy"
+            />
+
+            <div className="modal-contact-note">
+              <p>Having trouble? Contact us directly.</p>
+              <a href="tel:+447472221865">Phone: +44 7472 221865</a>
+              <a href="mailto:wubjesus05@gmail.com">Email: wubjesus05@gmail.com</a>
+            </div>
+          </section>
+        </div>
+      ) : null}
     </div>
   );
 }
