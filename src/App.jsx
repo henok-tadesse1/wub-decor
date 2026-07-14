@@ -19,11 +19,13 @@ import {
 import { QRCodeSVG } from "qrcode.react";
 
 const JOTFORM_APP_URL = "https://app.jotform.com/261272926529363";
+const JOTFORM_CONSULTATION_URL = "PASTE_YOUR_JOTFORM_CONSULTATION_LINK_HERE";
 
 const navigationItems = [
   { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
   { label: "About", href: "#about" },
+  { label: "Request a Consultation", href: "#consultation" },
   { label: "Open App", href: "#app" },
   { label: "Contact", href: "#contact" }
 ];
@@ -31,41 +33,49 @@ const navigationItems = [
 const services = [
   {
     title: "Weddings",
+    selectedService: "Wedding Planning",
     description: "Purposeful wedding planning, styling, and coordination for a graceful celebration.",
     icon: HeartHandshake
   },
   {
     title: "Birthday Celebrations",
+    selectedService: "Birthday Celebration",
     description: "Beautifully styled milestone birthdays with smooth planning from start to finish.",
     icon: Gift
   },
   {
     title: "Anniversaries",
+    selectedService: "Anniversary Celebration",
     description: "Meaningful anniversary moments designed with warmth, romance, and detail.",
     icon: CalendarHeart
   },
   {
     title: "Graduation Celebrations",
+    selectedService: "Graduation Celebration",
     description: "Elegant graduation gatherings that honour achievement with family and friends.",
     icon: GraduationCap
   },
   {
     title: "Bridal Showers",
+    selectedService: "Bridal Shower",
     description: "Soft, polished bridal shower styling with thoughtful guest experiences.",
     icon: Sparkles
   },
   {
     title: "Baby Showers",
+    selectedService: "Baby Shower",
     description: "Gentle, joyful baby shower decor and planning for a memorable welcome.",
     icon: Baby
   },
   {
     title: "Engagement Parties",
+    selectedService: "Engagement Party",
     description: "Romantic engagement celebrations shaped around your love story.",
     icon: PartyPopper
   },
   {
     title: "Private and Special Celebrations",
+    selectedService: "Private and Special Celebration",
     description: "Bespoke support for intimate gatherings, family occasions, and personal milestones.",
     icon: Music
   }
@@ -84,10 +94,26 @@ const coordinationItems = [
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState("Wedding Planning");
   const hasJotformAppUrl = !JOTFORM_APP_URL.includes("PASTE_YOUR_JOTFORM_APP_LINK_HERE");
+  const hasConsultationUrl = !JOTFORM_CONSULTATION_URL.includes(
+    "PASTE_YOUR_JOTFORM_CONSULTATION_LINK_HERE"
+  );
   const currentYear = new Date().getFullYear();
+  const consultationFormUrl = hasConsultationUrl
+    ? `${JOTFORM_CONSULTATION_URL}${
+        JOTFORM_CONSULTATION_URL.includes("?") ? "&" : "?"
+      }selectedService=${encodeURIComponent(selectedService)}`
+    : "";
 
   const closeMenu = () => setIsMenuOpen(false);
+  const requestConsultation = (serviceName = selectedService) => {
+    setSelectedService(serviceName);
+    closeMenu();
+    window.requestAnimationFrame(() => {
+      document.getElementById("consultation")?.scrollIntoView({ behavior: "smooth" });
+    });
+  };
 
   return (
     <div className="site-shell">
@@ -96,9 +122,9 @@ function App() {
           className="brand"
           href="#home"
           onClick={closeMenu}
-          aria-label="Wub Christian Wedding Planner home"
+          aria-label="Wub Christian Wedding & Event Planner home"
         >
-          Wub Christian Wedding Planner
+          Wub Christian Wedding & Event Planner
         </a>
 
         <button
@@ -132,17 +158,21 @@ function App() {
             <p className="eyebrow">Christian wedding and event planning in Manchester</p>
             <h1 id="hero-title">Beautiful Events, Planned with Purpose</h1>
             <p>
-              Wub Christian Wedding Planner creates elegant, meaningful and stress-free weddings and
-              special celebrations in Manchester and surrounding areas.
+              Wub Christian Wedding & Event Planner creates elegant, meaningful and stress-free
+              weddings and special celebrations in Manchester and surrounding areas.
             </p>
             <div className="hero-actions" aria-label="Hero actions">
               <a className="button button-primary" href="#services">
                 View Our Services
                 <ChevronRight aria-hidden="true" />
               </a>
-              <a className="button button-secondary" href="#app">
-                Open Wub Christian Wedding Planner App
-              </a>
+              <button
+                className="button button-secondary"
+                type="button"
+                onClick={() => requestConsultation()}
+              >
+                Request a Consultation
+              </button>
             </div>
           </div>
         </section>
@@ -152,22 +182,43 @@ function App() {
             <p className="eyebrow">What we create</p>
             <h2 id="services-title">Our Services</h2>
             <p>
-              From intimate family moments to full wedding days, Wub Christian Wedding Planner brings
-              calm planning, elegant styling, and attentive coordination to each celebration.
+              From intimate family moments to full wedding days, Wub Christian Wedding & Event
+              Planner brings calm planning, elegant styling, and attentive coordination to each
+              celebration.
             </p>
           </div>
 
           <div className="service-grid">
-            {services.map(({ title, description, icon: Icon }) => (
-              <article className="service-card" key={title}>
+            {services.map(({ title, selectedService: serviceName, description, icon: Icon }) => (
+              <article
+                className="service-card"
+                key={title}
+                role="button"
+                tabIndex={0}
+                aria-label={`Request a Consultation for ${title}`}
+                onClick={() => requestConsultation(serviceName)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    requestConsultation(serviceName);
+                  }
+                }}
+              >
                 <div className="icon-wrap">
                   <Icon aria-hidden="true" />
                 </div>
                 <h3>{title}</h3>
                 <p>{description}</p>
-                <a className="offer-link" href="#contact">
-                  Get a Personalised Offer
-                </a>
+                <button
+                  className="offer-link"
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    requestConsultation(serviceName);
+                  }}
+                >
+                  Request a Consultation
+                </button>
               </article>
             ))}
           </div>
@@ -176,28 +227,32 @@ function App() {
             <p className="eyebrow">Personalised packages</p>
             <h3>Looking for the best package for your celebration?</h3>
             <p>
-              Contact Wub Christian Wedding Planner and tell us about your event. We will discuss
-              your requirements and provide a personalised offer based on your event type, location,
-              number of guests and services needed.
+              Contact Wub Christian Wedding & Event Planner and tell us about your event. We will
+              discuss your requirements and provide a personalised offer based on your event type,
+              location, number of guests and services needed.
             </p>
-            <a className="button button-primary" href="#contact">
-              Contact Us for an Offer
-            </a>
+            <button
+              className="button button-primary"
+              type="button"
+              onClick={() => requestConsultation()}
+            >
+              Request a Consultation
+            </button>
           </div>
         </section>
 
         <section className="section about-section" id="about" aria-labelledby="about-title">
           <div className="about-copy">
-            <p className="eyebrow">About Wub Christian Wedding Planner</p>
+            <p className="eyebrow">About Wub Christian Wedding & Event Planner</p>
             <h2 id="about-title">Spiritual planning for meaningful celebrations.</h2>
             <p>
-              Wub Christian Wedding Planner is a Manchester-based spiritual wedding and event
+              Wub Christian Wedding & Event Planner is a Manchester-based spiritual wedding and event
               planning service focused on creating meaningful, elegant and memorable celebrations.
             </p>
             <p>
               From the first planning conversation to the final moments of the event, Wub Christian
-              Wedding Planner coordinates the important details so clients can relax and enjoy their
-              special occasion.
+              Wedding & Event Planner coordinates the important details so clients can relax and enjoy
+              their special occasion.
             </p>
           </div>
 
@@ -217,19 +272,63 @@ function App() {
           </div>
         </section>
 
+        <section className="consultation-section" id="consultation" aria-labelledby="consultation-title">
+          <div className="section-heading centered">
+            <p className="eyebrow">Subject to confirmation</p>
+            <h2 id="consultation-title">Request a Consultation</h2>
+            <p>
+              Tell us about your special occasion and provide a few suitable consultation times. Our
+              first consultation will normally take place by phone. If needed, an in-person meeting can
+              be arranged afterwards.
+            </p>
+          </div>
+
+          <div className="consultation-layout">
+            <aside className="consultation-summary" aria-label="Consultation availability and selected service">
+              <p className="selected-service">Selected service: {selectedService}</p>
+              <div className="availability-note">
+                <h3>Consultation availability:</h3>
+                <p>Monday to Friday</p>
+                <p>8:00 AM to 5:00 PM</p>
+              </div>
+              <p className="small-note">
+                Please choose preferred dates and times only. Consultation requests are reviewed and
+                remain subject to confirmation.
+              </p>
+            </aside>
+
+            <div className="consultation-form-card">
+              {hasConsultationUrl ? (
+                <iframe
+                  className="consultation-frame"
+                  src={consultationFormUrl}
+                  title="Wub Consultation Request Form"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="setup-message" role="status">
+                  <Sparkles aria-hidden="true" />
+                  <h3>Consultation form setup needed</h3>
+                  <p>Add your Jotform consultation link to activate the consultation form.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
         <section className="app-section" id="app" aria-labelledby="app-title">
           <div className="section-heading centered">
             <p className="eyebrow">Forms and services</p>
-            <h2 id="app-title">Open the Wub Christian Wedding Planner App</h2>
+            <h2 id="app-title">Open the Wub Christian Wedding & Event Planner App</h2>
             <p>
-              Scan the QR code with your phone camera to open the Wub Christian Wedding Planner app
-              and access our forms and services.
+              Scan the QR code with your phone camera to open the Wub Christian Wedding & Event
+              Planner app and access our forms and services.
             </p>
           </div>
 
           {hasJotformAppUrl ? (
             <div className="qr-layout">
-              <div className="qr-card" aria-label="Wub Christian Wedding Planner app QR code">
+              <div className="qr-card" aria-label="Wub Christian Wedding & Event Planner app QR code">
                 <QRCodeSVG
                   value={JOTFORM_APP_URL}
                   size={300}
@@ -237,7 +336,7 @@ function App() {
                   fgColor="#4b0926"
                   level="H"
                   includeMargin
-                  title="QR code to open the Wub Christian Wedding Planner app"
+                  title="QR code to open the Wub Christian Wedding & Event Planner app"
                 />
               </div>
               <div className="qr-copy">
@@ -264,7 +363,7 @@ function App() {
         <section className="section contact-section" id="contact" aria-labelledby="contact-title">
           <div>
             <p className="eyebrow">Contact</p>
-            <h2 id="contact-title">Contact Wub Christian Wedding Planner</h2>
+            <h2 id="contact-title">Contact Wub Christian Wedding & Event Planner</h2>
             <p>Based in Manchester, United Kingdom</p>
             <p>
               Tell us which service you are interested in and we will contact you to discuss a suitable
@@ -282,7 +381,7 @@ function App() {
               <span>Phone: +44 7472 221865</span>
             </a>
             <a className="button button-primary" href="#app">
-              Open Wub Christian Wedding Planner App
+              Open Wub Christian Wedding & Event Planner App
             </a>
           </div>
         </section>
@@ -290,7 +389,7 @@ function App() {
 
       <footer className="site-footer">
         <div>
-          <h2>Wub Christian Wedding Planner</h2>
+          <h2>Wub Christian Wedding & Event Planner</h2>
           <p>Christian Wedding and Event Planning</p>
           <p>Manchester, United Kingdom</p>
         </div>
@@ -303,7 +402,9 @@ function App() {
           ))}
         </nav>
 
-        <p className="copyright">© {currentYear} Wub Christian Wedding Planner. All rights reserved.</p>
+        <p className="copyright">
+          © {currentYear} Wub Christian Wedding & Event Planner. All rights reserved.
+        </p>
       </footer>
     </div>
   );
