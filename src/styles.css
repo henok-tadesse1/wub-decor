@@ -504,7 +504,7 @@ h3 {
 .consultation-frame {
   display: block;
   width: 100%;
-  min-height: 980px;
+  min-height: 1300px;
   background: var(--ivory);
   border: 0;
   border-radius: 8px;
@@ -982,7 +982,7 @@ h3 {
   }
 
   .consultation-frame {
-    min-height: 820px;
+    min-height: 900px;
   }
 
   .coordination-panel ul {

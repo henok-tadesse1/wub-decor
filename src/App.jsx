@@ -19,7 +19,7 @@ import {
 import { QRCodeSVG } from "qrcode.react";
 
 const JOTFORM_APP_URL = "https://app.jotform.com/261272926529363";
-const JOTFORM_CONSULTATION_URL = "PASTE_YOUR_JOTFORM_CONSULTATION_LINK_HERE";
+const JOTFORM_CONSULTATION_URL = "https://form.jotform.com/261273285360052";
 
 const navigationItems = [
   { label: "Home", href: "#home" },
@@ -96,15 +96,10 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("Wedding Planning");
   const hasJotformAppUrl = !JOTFORM_APP_URL.includes("PASTE_YOUR_JOTFORM_APP_LINK_HERE");
-  const hasConsultationUrl = !JOTFORM_CONSULTATION_URL.includes(
-    "PASTE_YOUR_JOTFORM_CONSULTATION_LINK_HERE"
-  );
   const currentYear = new Date().getFullYear();
-  const consultationFormUrl = hasConsultationUrl
-    ? `${JOTFORM_CONSULTATION_URL}${
-        JOTFORM_CONSULTATION_URL.includes("?") ? "&" : "?"
-      }selectedService=${encodeURIComponent(selectedService)}`
-    : "";
+  const consultationFormUrl = `${JOTFORM_CONSULTATION_URL}${
+    JOTFORM_CONSULTATION_URL.includes("?") ? "&" : "?"
+  }selectedService=${encodeURIComponent(selectedService)}`;
 
   const closeMenu = () => setIsMenuOpen(false);
   const requestConsultation = (serviceName = selectedService) => {
@@ -298,20 +293,12 @@ function App() {
             </aside>
 
             <div className="consultation-form-card">
-              {hasConsultationUrl ? (
-                <iframe
-                  className="consultation-frame"
-                  src={consultationFormUrl}
-                  title="Wub Consultation Request Form"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="setup-message" role="status">
-                  <Sparkles aria-hidden="true" />
-                  <h3>Consultation form setup needed</h3>
-                  <p>Add your Jotform consultation link to activate the consultation form.</p>
-                </div>
-              )}
+              <iframe
+                className="consultation-frame"
+                src={consultationFormUrl}
+                title="Wub Christian Wedding & Event Planner Consultation Request Form"
+                loading="lazy"
+              />
             </div>
           </div>
         </section>
