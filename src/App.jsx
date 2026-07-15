@@ -212,7 +212,7 @@ function App() {
         <section className="hero-section" id="home" aria-labelledby="hero-title">
           <div className="hero-overlay" />
           <div className="hero-content">
-            <p className="eyebrow">Christian wedding and event planning in Manchester</p>
+            <p className="eyebrow">Wedding and event planner Manchester</p>
             <h1 id="hero-title">Beautiful Events, Planned with Purpose</h1>
             <p>
               Wub Christian Wedding & Event Planner creates elegant, meaningful and stress-free
@@ -240,8 +240,8 @@ function App() {
             <h2 id="services-title">Our Services</h2>
             <p>
               From intimate family moments to full wedding days, Wub Christian Wedding & Event
-              Planner brings calm planning, elegant styling, and attentive coordination to each
-              celebration.
+              Planner brings calm event planning in Manchester, elegant styling, and attentive
+              coordination to each celebration.
             </p>
           </div>
 
@@ -303,13 +303,13 @@ function App() {
             <p className="eyebrow">About Wub Christian Wedding & Event Planner</p>
             <h2 id="about-title">Spiritual planning for meaningful celebrations.</h2>
             <p>
-              Wub Christian Wedding & Event Planner is a Manchester-based spiritual wedding and event
-              planning service focused on creating meaningful, elegant and memorable celebrations.
+              Wub Christian Wedding & Event Planner is a Christian wedding planner Manchester
+              couples and families can trust for meaningful, elegant and memorable celebrations.
             </p>
             <p>
               From the first planning conversation to the final moments of the event, Wub Christian
               Wedding & Event Planner coordinates the important details so clients can relax and enjoy
-              their special occasion.
+              their special occasion across Manchester and surrounding areas.
             </p>
           </div>
 
@@ -427,9 +427,9 @@ function App() {
           </div>
 
           <div className="contact-card">
-            <a href="mailto:wubjesus05@gmail.com">
+            <a href="mailto:info.wub.decor@gmail.com">
               <Mail aria-hidden="true" />
-              <span>Email: wubjesus05@gmail.com</span>
+              <span>Email: info.wub.decor@gmail.com</span>
             </a>
             <a href="tel:+447472221865">
               <Phone aria-hidden="true" />
@@ -510,7 +510,7 @@ function App() {
             <div className="modal-contact-note">
               <p>Having trouble? Contact us directly.</p>
               <a href="tel:+447472221865">Phone: +44 7472 221865</a>
-              <a href="mailto:wubjesus05@gmail.com">Email: wubjesus05@gmail.com</a>
+              <a href="mailto:info.wub.decor@gmail.com">Email: info.wub.decor@gmail.com</a>
             </div>
           </section>
         </div>

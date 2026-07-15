@@ -1,0 +1,16 @@
+{
+  "name": "Wub Christian Wedding & Event Planner",
+  "short_name": "Wub",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#4b0926",
+  "background_color": "#fff9ef",
+  "icons": [
+    {
+      "src": "/icons/wub-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
