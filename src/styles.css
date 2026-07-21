@@ -123,6 +123,50 @@ button {
   flex: 0 0 auto;
 }
 
+.promotion-bar {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  width: 100%;
+  background: var(--burgundy);
+  border-bottom: 1px solid rgba(201, 155, 87, 0.34);
+  color: var(--champagne);
+  white-space: nowrap;
+}
+
+.promotion-track {
+  display: flex;
+  width: max-content;
+  animation: promotionMarquee 24s linear infinite;
+  will-change: transform;
+}
+
+.promotion-bar:hover .promotion-track {
+  animation-play-state: paused;
+}
+
+.promotion-text {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding-inline: 18px;
+  color: var(--champagne);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@keyframes promotionMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .hero-section {
   position: relative;
   display: grid;
@@ -1011,6 +1055,13 @@ h3 {
     padding: 13px 10px;
   }
 
+  .promotion-text {
+    min-height: 30px;
+    padding-inline: 12px;
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+  }
+
   .hero-section {
     min-height: 620px;
     padding: 190px 12px 34px;
@@ -1208,5 +1259,16 @@ h3 {
     gap: 8px;
     padding: 14px;
     font-size: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promotion-track {
+    animation: none;
+    transform: none;
+  }
+
+  .promotion-text-duplicate {
+    display: none;
   }
 }

@@ -17,6 +17,7 @@ import {
   X
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
+import PromotionBar from "./components/PromotionBar";
 
 const JOTFORM_APP_URL = "https://app.jotform.com/261272926529363";
 const JOTFORM_CONSULTATION_URL = "https://form.jotform.com/261273285360052";
@@ -235,6 +236,8 @@ function App() {
           ))}
         </nav>
       </header>
+
+      <PromotionBar />
 
       <main>
         <section className="hero-section" id="home" aria-labelledby="hero-title">
