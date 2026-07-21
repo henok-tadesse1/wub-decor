@@ -135,10 +135,12 @@ button {
 }
 
 .promotion-track {
+  --promotion-duration: 24s;
+
   display: flex;
   flex-wrap: nowrap;
   width: max-content;
-  animation: promotionMarquee 24s linear infinite;
+  animation: promotionMarquee var(--promotion-duration) linear infinite;
   will-change: transform;
 }
 
@@ -150,8 +152,7 @@ button {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding-left: 18px;
-  padding-right: clamp(34px, 5vw, 56px);
+  padding-right: clamp(42px, 6vw, 68px);
   white-space: nowrap;
 }
 
@@ -170,10 +171,10 @@ button {
 
 @keyframes promotionMarquee {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -1097,8 +1098,7 @@ h3 {
   }
 
   .promotion-group {
-    padding-left: 12px;
-    padding-right: 34px;
+    padding-right: 40px;
   }
 
   .hero-section {
@@ -1301,6 +1301,12 @@ h3 {
     gap: 8px;
     padding: 14px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+  .promotion-track {
+    --promotion-duration: 22s;
   }
 }
 
