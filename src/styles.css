@@ -136,6 +136,7 @@ button {
 
 .promotion-track {
   display: flex;
+  flex-wrap: nowrap;
   width: max-content;
   animation: promotionMarquee 24s linear infinite;
   will-change: transform;
@@ -145,17 +146,26 @@ button {
   animation-play-state: paused;
 }
 
+.promotion-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-left: 18px;
+  padding-right: clamp(34px, 5vw, 56px);
+  white-space: nowrap;
+}
+
 .promotion-text {
   display: inline-flex;
   align-items: center;
   min-height: 34px;
-  padding-inline: 18px;
   color: var(--champagne);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.13em;
   line-height: 1;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 @keyframes promotionMarquee {
@@ -1082,9 +1092,13 @@ h3 {
 
   .promotion-text {
     min-height: 30px;
-    padding-inline: 12px;
     font-size: 0.67rem;
     letter-spacing: 0.08em;
+  }
+
+  .promotion-group {
+    padding-left: 12px;
+    padding-right: 34px;
   }
 
   .hero-section {
@@ -1296,7 +1310,7 @@ h3 {
     transform: none;
   }
 
-  .promotion-text-duplicate {
+  .promotion-group-duplicate {
     display: none;
   }
 }

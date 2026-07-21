@@ -5,10 +5,12 @@ function PromotionBar() {
   return (
     <section className="promotion-bar" aria-label="Business promotion">
       <div className="promotion-track">
-        <span className="promotion-text">{PROMOTION_MESSAGE}</span>
-        <span className="promotion-text promotion-text-duplicate" aria-hidden="true">
-          {PROMOTION_MESSAGE}
-        </span>
+        <div className="promotion-group">
+          <span className="promotion-text">{PROMOTION_MESSAGE}</span>
+        </div>
+        <div className="promotion-group promotion-group-duplicate" aria-hidden="true">
+          <span className="promotion-text">{PROMOTION_MESSAGE}</span>
+        </div>
       </div>
     </section>
   );
