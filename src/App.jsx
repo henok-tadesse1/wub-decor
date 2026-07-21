@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import {
   Baby,
   CalendarHeart,
@@ -16,8 +16,11 @@ import {
   Users,
   X
 } from "lucide-react";
-import { QRCodeSVG } from "qrcode.react";
 import PromotionBar from "./components/PromotionBar";
+
+const QRCodeSVG = lazy(() =>
+  import("qrcode.react").then((module) => ({ default: module.QRCodeSVG }))
+);
 
 const JOTFORM_APP_URL = "https://app.jotform.com/261272926529363";
 const JOTFORM_CONSULTATION_URL = "https://form.jotform.com/261273285360052";
@@ -125,7 +128,9 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("Wedding Planning");
   const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
+  const [isQrCodeReady, setIsQrCodeReady] = useState(false);
   const modalRef = useRef(null);
+  const appSectionRef = useRef(null);
   const consultationTriggerRef = useRef(null);
   const hasJotformAppUrl = !JOTFORM_APP_URL.includes("PASTE_YOUR_JOTFORM_APP_LINK_HERE");
   const currentYear = new Date().getFullYear();
@@ -201,6 +206,32 @@ function App() {
     };
   }, [isConsultationModalOpen]);
 
+  useEffect(() => {
+    const appSection = appSectionRef.current;
+    if (!appSection || isQrCodeReady) {
+      return undefined;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      setIsQrCodeReady(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsQrCodeReady(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+
+    observer.observe(appSection);
+
+    return () => observer.disconnect();
+  }, [isQrCodeReady]);
+
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -241,6 +272,21 @@ function App() {
 
       <main>
         <section className="hero-section" id="home" aria-labelledby="hero-title">
+          <picture className="hero-media" aria-hidden="true">
+            <source
+              type="image/jpeg"
+              srcSet="/images/optimized/wub-decor-hero-640.jpg 640w, /images/optimized/wub-decor-hero-960.jpg 960w, /images/optimized/wub-decor-hero-1536.jpg 1536w"
+              sizes="100vw"
+            />
+            <img
+              src="/images/optimized/wub-decor-hero-1536.jpg"
+              alt=""
+              width="1536"
+              height="1024"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
           <div className="hero-overlay" />
           <div className="hero-content">
             <p className="eyebrow">Wedding and event planner Manchester</p>
@@ -417,7 +463,7 @@ function App() {
           </div>
         </section>
 
-        <section className="app-section" id="app" aria-labelledby="app-title">
+        <section className="app-section" id="app" aria-labelledby="app-title" ref={appSectionRef}>
           <div className="section-heading centered">
             <p className="eyebrow">Forms and services</p>
             <h2 id="app-title">Open the Wub Christian Wedding & Event Planner App</h2>
@@ -430,15 +476,21 @@ function App() {
           {hasJotformAppUrl ? (
             <div className="qr-layout">
               <div className="qr-card" aria-label="Wub Christian Wedding & Event Planner app QR code">
-                <QRCodeSVG
-                  value={JOTFORM_APP_URL}
-                  size={300}
-                  bgColor="#ffffff"
-                  fgColor="#4b0926"
-                  level="H"
-                  includeMargin
-                  title="QR code to open the Wub Christian Wedding & Event Planner app"
-                />
+                {isQrCodeReady ? (
+                  <Suspense fallback={<span className="qr-loading">Loading QR code</span>}>
+                    <QRCodeSVG
+                      value={JOTFORM_APP_URL}
+                      size={300}
+                      bgColor="#ffffff"
+                      fgColor="#4b0926"
+                      level="H"
+                      includeMargin
+                      title="QR code to open the Wub Christian Wedding & Event Planner app"
+                    />
+                  </Suspense>
+                ) : (
+                  <span className="qr-loading">QR code ready below</span>
+                )}
               </div>
               <div className="qr-copy">
                 <h3>Scan to continue on your phone</h3>
