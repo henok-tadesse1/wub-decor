@@ -7,9 +7,16 @@
     <meta name="robots" content="index, follow" />
     <meta
       name="description"
-      content="Wub Christian Wedding & Event Planner provides elegant wedding planning, birthdays, engagements, anniversaries, graduations, baby showers, corporate events and private celebrations across Manchester and surrounding areas."
+      content="Wub Christian Wedding & Event Planner provides elegant wedding planning, birthdays, engagements, anniversaries, graduations, baby showers and private celebrations across Manchester and surrounding areas."
     />
     <link rel="canonical" href="https://wub-decor.netlify.app/" />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/wub-decor-background.png"
+      type="image/png"
+      fetchpriority="high"
+    />
     <link rel="icon" type="image/svg+xml" href="/icons/wub-icon.svg" />
     <link rel="apple-touch-icon" href="/icons/wub-icon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -23,6 +30,8 @@
     />
     <meta property="og:image" content="https://wub-decor.netlify.app/images/wub-decor-background.png" />
     <meta property="og:image:alt" content="Wub Christian Wedding & Event Planner branding image" />
+    <meta property="og:image:width" content="1536" />
+    <meta property="og:image:height" content="1024" />
     <meta property="og:site_name" content="Wub Christian Wedding & Event Planner" />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -37,14 +46,34 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": ["LocalBusiness", "Organization"],
+        "@id": "https://wub-decor.netlify.app/#business",
         "name": "Wub Christian Wedding & Event Planner",
         "url": "https://wub-decor.netlify.app/",
-        "email": "info.wub.decor@gmail.com",
         "telephone": "+447472221865",
-        "description": "Christian wedding and event planning services for Manchester and surrounding areas.",
-        "areaServed": "Manchester and surrounding areas",
-        "logo": "https://wub-decor.netlify.app/images/wub-decor-background.png"
+        "email": "info.wub.event.planner@gmail.com",
+        "description": "Christian wedding and event planning services for elegant, meaningful and well-organised celebrations in Manchester and surrounding areas.",
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Manchester"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Greater Manchester"
+          }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Manchester",
+          "addressRegion": "Greater Manchester",
+          "addressCountry": "GB"
+        },
+        "sameAs": [
+          "https://www.instagram.com/wub.christian.wedding.planner/"
+        ],
+        "logo": "https://wub-decor.netlify.app/images/wub-decor-background.png",
+        "image": "https://wub-decor.netlify.app/images/wub-decor-background.png"
       }
     </script>
 

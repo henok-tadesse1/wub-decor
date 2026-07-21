@@ -82,14 +82,42 @@ const services = [
 ];
 
 const coordinationItems = [
-  "Photographers and videographers",
-  "Master of ceremonies",
-  "Decorators",
-  "Entertainment and performers",
-  "Vendors and suppliers",
-  "Event schedules and timing",
+  "Initial consultation",
+  "Planning and coordination",
+  "Supplier and vendor coordination",
+  "Event timeline management",
   "Guest coordination",
+  "On-the-day support",
+  "Photographers, decorators, venues, caterers and entertainers",
   "Unexpected situations during the event"
+];
+
+const faqItems = [
+  {
+    question: "Which areas do you cover?",
+    answer:
+      "Manchester and surrounding areas. Enquiries for events outside the area can be discussed individually."
+  },
+  {
+    question: "What types of events do you plan?",
+    answer:
+      "Weddings, engagements, birthdays, anniversaries, bridal showers, baby showers, graduations and other private celebrations."
+  },
+  {
+    question: "How do I request a consultation?",
+    answer:
+      "Use the consultation request button or form. Wub will review the information and contact you to discuss availability and next steps."
+  },
+  {
+    question: "Can you coordinate the event on the day?",
+    answer:
+      "Yes. On-the-day coordination can include managing suppliers, timings, guests and important event details."
+  },
+  {
+    question: "Do you work with the client's chosen suppliers?",
+    answer:
+      "Yes. Wub can coordinate with your selected photographers, decorators, venues, caterers, entertainers and other suppliers."
+  }
 ];
 
 function App() {
@@ -288,6 +316,19 @@ function App() {
               discuss your requirements and provide a personalised offer based on your event type,
               location, number of guests and services needed.
             </p>
+            <h3>Wedding Planning</h3>
+            <p>
+              From intimate ceremonies to larger wedding celebrations, Wub supports couples with
+              planning, supplier coordination, event schedules, guest arrangements and on-the-day
+              coordination. Our aim is to create a beautiful and stress-free celebration centred on
+              the couple's vision and values.
+            </p>
+            <h3>Other Celebrations</h3>
+            <p>
+              We also plan and coordinate engagements, birthdays, anniversaries, bridal showers, baby
+              showers, graduations and other private celebrations. Every event is approached with
+              care, professionalism and attention to detail.
+            </p>
             <button
               className="button button-primary"
               type="button"
@@ -303,8 +344,10 @@ function App() {
             <p className="eyebrow">About Wub Christian Wedding & Event Planner</p>
             <h2 id="about-title">Spiritual planning for meaningful celebrations.</h2>
             <p>
-              Wub Christian Wedding & Event Planner is a Christian wedding planner Manchester
-              couples and families can trust for meaningful, elegant and memorable celebrations.
+              Wub Christian Wedding & Event Planner creates elegant, meaningful and well-organised
+              celebrations in Manchester and surrounding areas. We believe every event should reflect
+              faith, love and purpose while allowing our clients to enjoy their special day without
+              worrying about the details.
             </p>
             <p>
               From the first planning conversation to the final moments of the event, Wub Christian
@@ -316,7 +359,7 @@ function App() {
           <div className="coordination-panel" aria-labelledby="coordination-title">
             <div className="panel-heading">
               <Users aria-hidden="true" />
-              <h3 id="coordination-title">We can help coordinate</h3>
+              <h3 id="coordination-title">How Wub Helps</h3>
             </div>
             <ul>
               {coordinationItems.map((item) => (
@@ -427,9 +470,9 @@ function App() {
           </div>
 
           <div className="contact-card">
-            <a href="mailto:info.wub.decor@gmail.com">
+            <a href="mailto:info.wub.event.planner@gmail.com">
               <Mail aria-hidden="true" />
-              <span>Email: info.wub.decor@gmail.com</span>
+              <span>Email: info.wub.event.planner@gmail.com</span>
             </a>
             <a href="tel:+447472221865">
               <Phone aria-hidden="true" />
@@ -438,6 +481,22 @@ function App() {
             <a className="button button-primary" href="#app">
               Open Wub Christian Wedding & Event Planner App
             </a>
+          </div>
+        </section>
+
+        <section className="section faq-section" aria-labelledby="faq-title">
+          <div className="section-heading centered">
+            <p className="eyebrow">Helpful answers</p>
+            <h2 id="faq-title">Frequently Asked Questions</h2>
+          </div>
+
+          <div className="faq-grid">
+            {faqItems.map(({ question, answer }) => (
+              <article className="faq-card" key={question}>
+                <h3>{question}</h3>
+                <p>{answer}</p>
+              </article>
+            ))}
           </div>
         </section>
       </main>
@@ -510,7 +569,9 @@ function App() {
             <div className="modal-contact-note">
               <p>Having trouble? Contact us directly.</p>
               <a href="tel:+447472221865">Phone: +44 7472 221865</a>
-              <a href="mailto:info.wub.decor@gmail.com">Email: info.wub.decor@gmail.com</a>
+              <a href="mailto:info.wub.event.planner@gmail.com">
+                Email: info.wub.event.planner@gmail.com
+              </a>
             </div>
           </section>
         </div>
