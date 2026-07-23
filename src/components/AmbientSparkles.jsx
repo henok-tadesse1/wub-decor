@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 const COLORS = [
   "rgba(255, 253, 248,",
   "rgba(255, 246, 224,",
-  "rgba(237, 213, 173,"
+  "rgba(255, 224, 166,"
 ];
 
 function createParticle(width, height, isSparkle = false) {
@@ -14,7 +14,7 @@ function createParticle(width, height, isSparkle = false) {
     size,
     sparkle: isSparkle,
     color: COLORS[Math.floor(Math.random() * COLORS.length)],
-    baseOpacity: isSparkle ? 0.25 + Math.random() * 0.15 : 0.1 + Math.random() * 0.2,
+    baseOpacity: isSparkle ? 0.35 + Math.random() * 0.2 : 0.16 + Math.random() * 0.22,
     phase: Math.random() * Math.PI * 2,
     speed: 0.00045 + Math.random() * 0.00085,
     driftX: (Math.random() - 0.5) * (isSparkle ? 10 : 7),
@@ -78,7 +78,7 @@ function AmbientSparkles() {
 
       context.beginPath();
       context.fillStyle = `${particle.color} ${opacity})`;
-      context.shadowBlur = particle.sparkle ? 10.35 : 4;
+      context.shadowBlur = particle.sparkle ? 12.42 : 4;
       context.shadowColor = `${particle.color} ${opacity * 0.8})`;
       context.arc(x, y, particle.size, 0, Math.PI * 2);
       context.fill();
