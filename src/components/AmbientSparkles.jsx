@@ -6,8 +6,16 @@ const COLORS = [
   "rgba(255, 224, 166,"
 ];
 
+function getParticleSize(isSparkle) {
+  if (isSparkle) {
+    return 2.7 + Math.random() * 0.6;
+  }
+
+  return Math.random() < 0.78 ? 0.8 + Math.random() * 0.4 : 1.7 + Math.random() * 0.6;
+}
+
 function createParticle(width, height, isSparkle = false) {
-  const size = isSparkle ? 1.6 + Math.random() * 1.9 : 0.7 + Math.random() * 1.4;
+  const size = getParticleSize(isSparkle);
   return {
     x: Math.random() * width,
     y: Math.random() * height,
@@ -42,11 +50,20 @@ function AmbientSparkles() {
 
     const getCounts = () => {
       const mobile = window.innerWidth <= 600;
+      const tablet = window.innerWidth <= 1024;
       if (reducedMotion) {
         return { dust: mobile ? 5 : 8, sparkles: mobile ? 0 : 1 };
       }
 
-      return mobile ? { dust: 28, sparkles: 2 } : { dust: 58, sparkles: 4 };
+      if (mobile) {
+        return { dust: 35, sparkles: 3 };
+      }
+
+      if (tablet) {
+        return { dust: 55, sparkles: 5 };
+      }
+
+      return { dust: 75, sparkles: 8 };
     };
 
     const seedParticles = () => {
