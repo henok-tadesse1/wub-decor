@@ -16,6 +16,7 @@ import {
   Users,
   X
 } from "lucide-react";
+import AmbientSparkles from "./components/AmbientSparkles";
 import PromotionBar from "./components/PromotionBar";
 
 const QRCodeSVG = lazy(() =>
@@ -234,6 +235,8 @@ function App() {
 
   return (
     <div className="site-shell">
+      <AmbientSparkles />
+
       <header className="site-header">
         <a
           className="brand"
